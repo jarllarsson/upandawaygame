@@ -139,6 +139,8 @@ GameObject:
   - 114: {fileID: 11450254}
   - 114: {fileID: 11413260}
   - 114: {fileID: 11450372}
+  - 114: {fileID: 11491898}
+  - 114: {fileID: 11487302}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -484,6 +486,37 @@ MonoBehaviour:
     m_Bits: 1024
   m_playerController: {fileID: 11411054}
   m_rbody: {fileID: 5400268}
+--- !u!114 &11487302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40af858e14bec146b99bb4e566583bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scriptsToDisableOnDeath:
+  - {fileID: 11411054}
+  - {fileID: 11413260}
+  - {fileID: 11450372}
+  - {fileID: 0}
+  m_killAreaTag: KillArea
+  m_checkPoints: {fileID: 11491898}
+  m_waitTimeForRespawn: 1
+  m_cameraRig: {fileID: 0}
+--- !u!114 &11491898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef3e710e56399c440ba0b2202a3d3de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!119 &11912334
 Projector:
   m_ObjectHideFlags: 1

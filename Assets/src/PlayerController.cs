@@ -269,8 +269,10 @@ public class PlayerController : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(m_groundCheckPoint.position, m_groundCheckRadius, m_groundLayer);
         if (hits.Length > 0)
         {
-            if (!m_isOnGround) 
-                m_jumpSquisher.setGoal(new Vector3(1.0f, 1.0f-Mathf.Clamp(Mathf.Abs(m_rbody.velocity.y*0.1f),0.0f,0.8f), 1.0f), 0.05f, true, 0.05f);
+            if (!m_isOnGround && m_rbody.velocity.y < -10.0f)
+            {
+                m_jumpSquisher.setGoal(new Vector3(1.0f, 1.0f - Mathf.Clamp(Mathf.Abs(m_rbody.velocity.y * 0.1f), 0.0f, 0.8f), 1.0f), 0.05f, true, 0.05f);
+            }
             m_isOnGround = true;
         }
         else
