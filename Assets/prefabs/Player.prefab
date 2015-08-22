@@ -77,6 +77,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &121526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 480280}
+  - 119: {fileID: 11912334}
+  m_Layer: 0
+  m_Name: BlobShadowProjector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &125676
 GameObject:
   m_ObjectHideFlags: 1
@@ -122,6 +138,7 @@ GameObject:
   - 114: {fileID: 11411054}
   - 114: {fileID: 11450254}
   - 114: {fileID: 11413260}
+  - 114: {fileID: 11450372}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -265,7 +282,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 146736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.360000014, y: 1.60000002, z: -3.81999993}
+  m_LocalPosition: {x: -.360000014, y: 1.82000005, z: -3.81999993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432672}
@@ -273,8 +290,21 @@ Transform:
   - {fileID: 499072}
   - {fileID: 462922}
   - {fileID: 449768}
+  - {fileID: 480280}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &480280
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121526}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
+  m_LocalPosition: {x: 0, y: .850000024, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 474824}
+  m_RootOrder: 5
 --- !u!4 &499072
 Transform:
   m_ObjectHideFlags: 1
@@ -402,13 +432,14 @@ MonoBehaviour:
   m_jumpPower: 180
   m_doubleJumpPower: 250
   m_tripleJumpPower: 300
+  m_extraJumpMovementForce: {x: 2, y: 0, z: 2}
   m_camOffsetUpOnJump: 8
   m_camPivotToOffsetOnJump: {fileID: 450622}
   m_camLookatOffsetUpOnJump: -3
   m_camLookatToOffsetOnJump: {fileID: 432672}
   m_debugMaterial: {fileID: 2100000, guid: bd5f57b9e186e074197171ce2b76e943, type: 2}
   m_jumpSquisher: {fileID: 11450254}
-  m_doubleJumpCountCoolDownLim: .5
+  m_doubleJumpCountCoolDownLim: .300000012
   m_holdJumpDiminishForce: .800000012
 --- !u!114 &11413260
 MonoBehaviour:
@@ -435,6 +466,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_transform: {fileID: 499072}
   m_transitionTime: 0
+--- !u!114 &11450372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65106c4c910d3494fb94b81f5fa4a594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_monsterStompCheckPoint: {fileID: 449768}
+  m_monsterCheckRadius: .5
+  m_monsterLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_playerController: {fileID: 11411054}
+  m_rbody: {fileID: 5400268}
+--- !u!119 &11912334
+Projector:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121526}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_NearClipPlane: 1.51999998
+  m_FarClipPlane: 50
+  m_FieldOfView: 15.4200001
+  m_AspectRatio: 1
+  m_Orthographic: 0
+  m_OrthographicSize: 2
+  m_Material: {fileID: 2100000, guid: e30ff3588e719f34bbf0c66f22d97487, type: 2}
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!135 &13553168
 SphereCollider:
   m_ObjectHideFlags: 1

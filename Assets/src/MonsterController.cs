@@ -12,7 +12,12 @@ public class MonsterController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (Random.Range(0,100)>95)
-            m_controller.setSteeringInput(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)));
+       if (Random.Range(0,100)>95)
+        m_controller.setSteeringInput(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)));
 	}
+
+    public void hitByPlayer()
+    {
+        Destroy(gameObject);
+    }
 }

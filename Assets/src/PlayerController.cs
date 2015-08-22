@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private bool m_isOnGround;
     private Vector3 m_inputDir;
     private Vector3 m_steerDir;
+    private Vector3 m_moveDir;
 
     public Transform m_playerSteerFacing;
     public Transform m_pointOfViewRunning;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float m_jumpPower = 1.0f;
     public float m_doubleJumpPower = 2.0f;
     public float m_tripleJumpPower = 3.0f;
+    public Vector3 m_extraJumpMovementForce;
 
 
     public float m_camOffsetUpOnJump = 5.0f;
@@ -72,7 +74,10 @@ public class PlayerController : MonoBehaviour
 
     public void setSteeringInput(Vector3 p_inputDir)
     {
-        m_inputDir = p_inputDir;
+        if (p_inputDir.magnitude>0.2f)
+            m_inputDir = p_inputDir;
+        else
+            m_inputDir = Vector3.zero;
     }
 
     public void setJumpingInput(float p_jumpVal)
@@ -98,7 +103,9 @@ public class PlayerController : MonoBehaviour
         if (m_rbody.velocity.y <= 0.0f) groundCheck();
         // Reset jump if we're falling to ground
         if (m_isOnGround && m_rbody.velocity.y <= 0.0f)
+        {
             m_isJumping = false;
+        }
         //
         if (m_isOnGround && !m_isJumping)
         {
@@ -114,17 +121,7 @@ public class PlayerController : MonoBehaviour
             // Try jump
             if (wasJumpBtnReleased())
             {
-                switch (m_jumpCount)
-                {
-                    case 0:
-                        jump(m_jumpPower); break;
-                    case 1:
-                        jump(m_doubleJumpPower); break;
-                    case 2:
-                        jump(m_tripleJumpPower); break;
-                    default:
-                        jump(m_jumpPower); break;
-                }
+                triggerJump();
             }
         }
         if (m_isJumping)
@@ -142,24 +139,56 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void triggerJump(bool p_manualTriggerOption=false)
+    {
+        switch (m_jumpCount)
+        {
+            case 0:
+                jump(m_jumpPower,p_manualTriggerOption); break;
+            case 1:
+                jump(m_doubleJumpPower,p_manualTriggerOption); break;
+            case 2:
+                jump(m_tripleJumpPower,p_manualTriggerOption); break;
+            default:
+                jump(m_jumpPower,p_manualTriggerOption); break;
+        }
+    }
+
+    public bool isSteering()
+    {
+        return m_isSteering;
+    }
+
     void setDirection()
     {
         if (m_isSteering)
         {
-            if (m_pointOfViewRunning || m_pointOfViewJumping)
-            {
-                if (m_isJumping)
-                    m_steerDir = m_pointOfViewJumping.TransformDirection(m_inputDir);
-                else
-                    m_steerDir = m_pointOfViewRunning.TransformDirection(m_inputDir);
-            }
+            updateSteerDir();
+            alignMeshToSteerDir();
+            m_moveDir = m_steerDir;
+        }
+        else if (m_isOnGround)
+            m_moveDir = Vector3.zero;
+    }
+
+    void updateSteerDir()
+    {
+        if (m_pointOfViewRunning || m_pointOfViewJumping)
+        {
+            if (m_isJumping)
+                m_steerDir = m_pointOfViewJumping.TransformDirection(m_inputDir);
             else
-                m_steerDir = m_inputDir;
-            m_playerSteerFacing.forward = m_steerDir;
+                m_steerDir = m_pointOfViewRunning.TransformDirection(m_inputDir);
         }
         else
-            m_steerDir = Vector3.zero;
+            m_steerDir = m_inputDir;
     }
+
+    void alignMeshToSteerDir()
+    {
+        m_playerSteerFacing.forward = m_steerDir;
+    }
+
 
     void steer(float m_multiplier)
     {
@@ -169,21 +198,22 @@ public class PlayerController : MonoBehaviour
         if (magnitude > 0.001f) m_isSteering = true; else m_isSteering = false;
         if (magnitude > 1.0f) m_inputDir.Normalize();
         setDirection();
-        m_rbody.velocity = new Vector3(m_maxSpeed * m_multiplier * m_steerDir.x, m_rbody.velocity.y, m_maxSpeed * m_multiplier * m_steerDir.z);
+        m_rbody.velocity = new Vector3(m_maxSpeed * m_multiplier * m_moveDir.x, m_rbody.velocity.y, m_maxSpeed * m_multiplier * m_moveDir.z);
     }
 
-    void jump(float p_pwr)
+    void jump(float p_pwr, bool p_force=false)
     {
-        if (isJumpBtnDown())
+        if (isJumpBtnDown() || p_force)
         {
-            setToJumpStatus();
+            setToJumpStatus(p_force);
             m_currentJumpForce = p_pwr;
+            m_rbody.velocity = new Vector3(m_rbody.velocity.x, m_currentJumpForce*0.03f, m_rbody.velocity.z);
         }
     }
 
-    void setToJumpStatus()
+    void setToJumpStatus(bool p_force=false)
     {
-        if (!m_isJumping)
+        if (!m_isJumping || p_force)
         {            
             if (m_jumpCount > 2) m_jumpCount = 0;
             m_isJumping = true;

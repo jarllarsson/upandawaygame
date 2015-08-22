@@ -137,8 +137,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .5, z: .529999971}
-  m_LocalScale: {x: .343957752, y: .285725355, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 1.09000003}
+  m_LocalScale: {x: 1.23258018, y: 1.18934, z: .619205773}
   m_Children: []
   m_Father: {fileID: 442516}
   m_RootOrder: 1
@@ -175,7 +175,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5999999, y: 1.61000001, z: .980000019}
+  m_LocalPosition: {x: 11.1000004, y: 1.60000002, z: -13.8999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 442516}
@@ -228,8 +228,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -.0199999996}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 442516}
   m_RootOrder: 0
@@ -243,7 +243,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: bd5f57b9e186e074197171ce2b76e943, type: 2}
+  - {fileID: 2100000, guid: 1f2d218045e329f478bfc7b7c90b50b5, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rbody: {fileID: 5424020}
-  m_maxSpeed: 10
+  m_maxSpeed: 2
   m_groundCheckPoint: {fileID: 408622}
   m_groundCheckRadius: .349999994
   m_groundLayer:
@@ -371,6 +371,7 @@ MonoBehaviour:
   m_jumpPower: 180
   m_doubleJumpPower: 250
   m_tripleJumpPower: 300
+  m_extraJumpMovementForce: {x: 0, y: 0, z: 0}
   m_camOffsetUpOnJump: 0
   m_camPivotToOffsetOnJump: {fileID: 0}
   m_camLookatOffsetUpOnJump: 0
@@ -389,8 +390,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1.24000001
+  m_Center: {x: 0, y: .680000007, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
