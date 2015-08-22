@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
     public float m_groundCheckRadius = 0.3f;
     public LayerMask m_groundLayer;
     private bool m_isOnGround;
+    private Vector3 m_inputDir;
+    private Vector3 m_steerDir;
+
+    public Transform m_playerSteerFacing;
+    public Transform m_pointOfView;
+    private bool m_isSteering=false;
 
     public float m_jumpPower = 1.0f;
     public float m_doubleJumpPower = 2.0f;
@@ -47,6 +53,8 @@ public class PlayerController : MonoBehaviour
             case 3:
                 m_debugMaterial.color = Color.red; break;
         }
+
+
 	}
 
     void FixedUpdate()
@@ -98,12 +106,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void setDirection()
+    {
+        if (m_isSteering)
+        {
+            m_steerDir = m_pointOfView.TransformDirection(m_inputDir);
+            m_playerSteerFacing.forward = m_steerDir;
+        }
+        else
+            m_steerDir = Vector3.zero;
+    }
+
     void steer(float m_multiplier)
     {
         // Basic steering
-        Vector3 steerDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-        if (steerDir.magnitude > 1.0f) steerDir.Normalize();
-        m_rbody.velocity = new Vector3(m_maxSpeed * m_multiplier * steerDir.x, m_rbody.velocity.y, m_maxSpeed * m_multiplier * steerDir.z);
+        m_inputDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        float magnitude = m_inputDir.magnitude;
+        if (magnitude > 0.001f) m_isSteering = true; else m_isSteering = false;
+        if (magnitude > 1.0f) m_inputDir.Normalize();
+        setDirection();
+        m_rbody.velocity = new Vector3(m_maxSpeed * m_multiplier * m_steerDir.x, m_rbody.velocity.y, m_maxSpeed * m_multiplier * m_steerDir.z);
     }
 
     void jump(float p_pwr)
