@@ -13,12 +13,19 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_steerDir;
 
     public Transform m_playerSteerFacing;
-    public Transform m_pointOfView;
+    public Transform m_pointOfViewRunning;
+    public Transform m_pointOfViewJumping;
     private bool m_isSteering=false;
 
     public float m_jumpPower = 1.0f;
     public float m_doubleJumpPower = 2.0f;
     public float m_tripleJumpPower = 3.0f;
+    public float m_camOffsetUpOnJump = 5.0f;
+    public Transform m_camPivotToOffsetOnJump;
+    private Vector3 m_camPivotOriginalLPos;
+    public float m_camLookatOffsetUpOnJump = 5.0f;
+    public Transform m_camLookatToOffsetOnJump;
+    private Vector3 m_camLookatOriginalLPos;
 
     public Material m_debugMaterial;
     public SquishStretch m_jumpSquisher;
@@ -36,7 +43,8 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	
+        m_camPivotOriginalLPos = m_camPivotToOffsetOnJump.localPosition;
+        m_camLookatOriginalLPos = m_camLookatToOffsetOnJump.localPosition;
 	}
 	
 	// Update is called once per frame
@@ -81,7 +89,12 @@ public class PlayerController : MonoBehaviour
         {
             m_isJumping = false;
             steer(1.0f);
-            coolDownDoubleJumpCount(); // Count the 
+            coolDownDoubleJumpCount(); // Count the jumps
+            // Reset cam pivot
+            m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos, Time.deltaTime * 5.0f);
+            // Reset cam lookat
+            m_camLookatToOffsetOnJump.localPosition = Vector3.Lerp(m_camLookatToOffsetOnJump.localPosition, m_camLookatOriginalLPos, Time.deltaTime * 5.0f);
+            // Try jump
             if (wasJumpBtnReleased())
             {
                 switch (m_jumpCount)
@@ -99,7 +112,11 @@ public class PlayerController : MonoBehaviour
         }
         if (m_isJumping)
         {
-            steer(0.5f);
+            steer(0.8f);
+            // Offset cam pivot
+            m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos+Vector3.up*m_camOffsetUpOnJump, Time.deltaTime * 10.0f);
+            // Offset cam lookat
+            m_camLookatToOffsetOnJump.localPosition = Vector3.Lerp(m_camLookatToOffsetOnJump.localPosition, m_camLookatOriginalLPos + Vector3.up * m_camLookatOffsetUpOnJump, Time.deltaTime * 10.0f);
             // While jumping
             m_jumpCountCoolDown = 0.0f; // reset jump counter cooldown, start afresh
             doJump(); // having this here allows the user to hold down button for a while for higher jump!
@@ -110,7 +127,10 @@ public class PlayerController : MonoBehaviour
     {
         if (m_isSteering)
         {
-            m_steerDir = m_pointOfView.TransformDirection(m_inputDir);
+            if (m_isJumping)
+                m_steerDir = m_pointOfViewJumping.TransformDirection(m_inputDir);
+            else
+                m_steerDir = m_pointOfViewRunning.TransformDirection(m_inputDir);
             m_playerSteerFacing.forward = m_steerDir;
         }
         else
