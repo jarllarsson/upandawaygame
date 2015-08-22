@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public float m_jumpPower = 1.0f;
     public float m_doubleJumpPower = 2.0f;
     public float m_tripleJumpPower = 3.0f;
+
+
     public float m_camOffsetUpOnJump = 5.0f;
     public Transform m_camPivotToOffsetOnJump;
     private Vector3 m_camPivotOriginalLPos;
@@ -39,31 +41,44 @@ public class PlayerController : MonoBehaviour
     private float m_currentJumpForce = 0.0f;
     private bool m_jumpButtonDown = false;
     private bool m_jumpButtonReleased = true;
-
+    private float m_jumpInputVal;
 	// Use this for initialization
 	void Start () 
     {
-        m_camPivotOriginalLPos = m_camPivotToOffsetOnJump.localPosition;
-        m_camLookatOriginalLPos = m_camLookatToOffsetOnJump.localPosition;
+        if (m_camPivotToOffsetOnJump) m_camPivotOriginalLPos = m_camPivotToOffsetOnJump.localPosition;
+        if (m_camLookatToOffsetOnJump) m_camLookatOriginalLPos = m_camLookatToOffsetOnJump.localPosition;
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        switch (m_jumpCount)
+        if (m_debugMaterial)
         {
-            case 0:
-                m_debugMaterial.color=Color.white; break;
-            case 1:
-                m_debugMaterial.color=Color.green; break;
-            case 2:
-                m_debugMaterial.color=Color.blue; break;
-            case 3:
-                m_debugMaterial.color = Color.red; break;
+            switch (m_jumpCount)
+            {
+                case 0:
+                    m_debugMaterial.color = Color.white; break;
+                case 1:
+                    m_debugMaterial.color = Color.green; break;
+                case 2:
+                    m_debugMaterial.color = Color.blue; break;
+                case 3:
+                    m_debugMaterial.color = Color.red; break;
+            }
         }
 
 
 	}
+
+    public void setSteeringInput(Vector3 p_inputDir)
+    {
+        m_inputDir = p_inputDir;
+    }
+
+    public void setJumpingInput(float p_jumpVal)
+    {
+        m_jumpInputVal = p_jumpVal;
+    }
 
     void FixedUpdate()
     {
@@ -76,7 +91,7 @@ public class PlayerController : MonoBehaviour
         {
             m_jumpButtonReleased = false;
         }
-        m_jumpButtonDown = Input.GetAxis("Jump") > 0.0f;
+        m_jumpButtonDown = m_jumpInputVal>0.0f;
 
 
         // Check if we're on ground, only when we're still(on y-axis) or falling down
@@ -91,9 +106,11 @@ public class PlayerController : MonoBehaviour
             steer(1.0f);
             coolDownDoubleJumpCount(); // Count the jumps
             // Reset cam pivot
-            m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos, Time.deltaTime * 5.0f);
+            if (m_camPivotToOffsetOnJump)
+                m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos, Time.deltaTime * 1.0f);
             // Reset cam lookat
-            m_camLookatToOffsetOnJump.localPosition = Vector3.Lerp(m_camLookatToOffsetOnJump.localPosition, m_camLookatOriginalLPos, Time.deltaTime * 5.0f);
+            if (m_camLookatToOffsetOnJump)
+                m_camLookatToOffsetOnJump.localPosition = Vector3.Lerp(m_camLookatToOffsetOnJump.localPosition, m_camLookatOriginalLPos, Time.deltaTime * 1.0f);
             // Try jump
             if (wasJumpBtnReleased())
             {
@@ -114,9 +131,11 @@ public class PlayerController : MonoBehaviour
         {
             steer(0.8f);
             // Offset cam pivot
-            m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos+Vector3.up*m_camOffsetUpOnJump, Time.deltaTime * 10.0f);
+            if (m_camPivotToOffsetOnJump)
+                m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos+Vector3.up*m_camOffsetUpOnJump, Time.deltaTime * 3.0f);
             // Offset cam lookat
-            m_camLookatToOffsetOnJump.localPosition = Vector3.Lerp(m_camLookatToOffsetOnJump.localPosition, m_camLookatOriginalLPos + Vector3.up * m_camLookatOffsetUpOnJump, Time.deltaTime * 10.0f);
+            if (m_camLookatToOffsetOnJump)
+                m_camLookatToOffsetOnJump.localPosition = Vector3.Lerp(m_camLookatToOffsetOnJump.localPosition, m_camLookatOriginalLPos + Vector3.up * m_camLookatOffsetUpOnJump, Time.deltaTime * 3.0f);
             // While jumping
             m_jumpCountCoolDown = 0.0f; // reset jump counter cooldown, start afresh
             doJump(); // having this here allows the user to hold down button for a while for higher jump!
@@ -127,10 +146,15 @@ public class PlayerController : MonoBehaviour
     {
         if (m_isSteering)
         {
-            if (m_isJumping)
-                m_steerDir = m_pointOfViewJumping.TransformDirection(m_inputDir);
+            if (m_pointOfViewRunning || m_pointOfViewJumping)
+            {
+                if (m_isJumping)
+                    m_steerDir = m_pointOfViewJumping.TransformDirection(m_inputDir);
+                else
+                    m_steerDir = m_pointOfViewRunning.TransformDirection(m_inputDir);
+            }
             else
-                m_steerDir = m_pointOfViewRunning.TransformDirection(m_inputDir);
+                m_steerDir = m_inputDir;
             m_playerSteerFacing.forward = m_steerDir;
         }
         else
@@ -140,7 +164,7 @@ public class PlayerController : MonoBehaviour
     void steer(float m_multiplier)
     {
         // Basic steering
-        m_inputDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        //m_inputDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
         float magnitude = m_inputDir.magnitude;
         if (magnitude > 0.001f) m_isSteering = true; else m_isSteering = false;
         if (magnitude > 1.0f) m_inputDir.Normalize();
@@ -225,6 +249,6 @@ public class PlayerController : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(m_groundCheckPoint.position, m_groundCheckRadius);
+        if (m_groundCheckPoint) Gizmos.DrawSphere(m_groundCheckPoint.position, m_groundCheckRadius);
     }
 }
