@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float m_tripleJumpPower = 3.0f;
 
     public Material m_debugMaterial;
+    public SquishStretch m_jumpSquisher;
 
     // Jump vars
     private int m_jumpCount=0; // current sequential jump
@@ -42,7 +43,9 @@ public class PlayerController : MonoBehaviour
             case 1:
                 m_debugMaterial.color=Color.green; break;
             case 2:
-                m_debugMaterial.color=Color.red; break;
+                m_debugMaterial.color=Color.blue; break;
+            case 3:
+                m_debugMaterial.color = Color.red; break;
         }
 	}
 
@@ -81,6 +84,8 @@ public class PlayerController : MonoBehaviour
                         jump(m_doubleJumpPower); break;
                     case 2:
                         jump(m_tripleJumpPower); break;
+                    default:
+                        jump(m_jumpPower); break;
                 }
             }
         }
@@ -113,11 +118,16 @@ public class PlayerController : MonoBehaviour
     void setToJumpStatus()
     {
         if (!m_isJumping)
-        {
+        {            
+            if (m_jumpCount > 2) m_jumpCount = 0;
             m_isJumping = true;
             m_jumpCountCoolDown = 0.0f;
             m_jumpCount++;
-            if (m_jumpCount > 2) m_jumpCount = 0;
+            if (m_jumpSquisher)
+            {
+                m_jumpSquisher.setStart(new Vector3(1.0f, 0.7f, 1.0f));
+                m_jumpSquisher.setGoal(new Vector3(1.0f, 1.8f, 1.0f), (3-m_jumpCount)*0.08f, true, m_jumpCount*0.15f);
+            }
         }
     }
 
@@ -162,7 +172,11 @@ public class PlayerController : MonoBehaviour
     {
         Collider[] hits = Physics.OverlapSphere(m_groundCheckPoint.position, m_groundCheckRadius, m_groundLayer);
         if (hits.Length > 0)
+        {
+            if (!m_isOnGround) 
+                m_jumpSquisher.setGoal(new Vector3(1.0f, 1.0f-Mathf.Clamp(Mathf.Abs(m_rbody.velocity.y*0.1f),0.0f,0.8f), 1.0f), 0.05f, true, 0.05f);
             m_isOnGround = true;
+        }
         else
             m_isOnGround = false;
     }
