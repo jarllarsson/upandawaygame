@@ -137,6 +137,7 @@ GameObject:
   - 54: {fileID: 5424020}
   - 114: {fileID: 11480502}
   - 114: {fileID: 11473662}
+  - 82: {fileID: 8215700}
   m_Layer: 10
   m_Name: Monster
   m_TagString: Monster
@@ -542,6 +543,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8215700
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141190}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9574424
 Animator:
   serializedVersion: 3
@@ -571,6 +641,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_controller: {fileID: 11489570}
+  m_collidersToUntag:
+  - {fileID: 117692}
+  - {fileID: 180230}
+  - {fileID: 130104}
+  - {fileID: 181884}
+  - {fileID: 174978}
+  - {fileID: 141190}
+  m_rbody: {fileID: 5424020}
+  m_animateOnDeath: {fileID: 498570}
+  m_renderAnimOnDeath: {fileID: 13791610}
+  m_hurtCol: {r: .300304025, g: 0, b: .926470578, a: 0}
+  m_blinkSpd: 20
+  m_audioSource: {fileID: 8215700}
+  m_dieSound: {fileID: 8300000, guid: b1d46d12f3025fe449931ec2a7288875, type: 3}
 --- !u!114 &11473662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,6 +717,10 @@ MonoBehaviour:
   m_jumpSquisher: {fileID: 11480502}
   m_doubleJumpCountCoolDownLim: .5
   m_holdJumpDiminishForce: .800000012
+  m_audioSource: {fileID: 0}
+  m_jumpSnd1: {fileID: 0}
+  m_jumpSnd2: {fileID: 0}
+  m_jumpSnd3: {fileID: 0}
 --- !u!119 &11930674
 Projector:
   m_ObjectHideFlags: 1

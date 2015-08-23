@@ -322,6 +322,7 @@ GameObject:
   - 114: {fileID: 11491898}
   - 114: {fileID: 11487302}
   - 114: {fileID: 11411702}
+  - 82: {fileID: 8211602}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1099,6 +1100,75 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!82 &8211602
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146736}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: .742124557
+      inSlope: 0
+      outSlope: -1.00200403
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: -1.00200403
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1.00201464
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9586986
 Animator:
   serializedVersion: 3
@@ -1151,6 +1221,10 @@ MonoBehaviour:
   m_jumpSquisher: {fileID: 11450254}
   m_doubleJumpCountCoolDownLim: .300000012
   m_holdJumpDiminishForce: .800000012
+  m_audioSource: {fileID: 8211602}
+  m_jumpSnd1: {fileID: 8300000, guid: fdb0b7ff236fb944db7ad1d72ab4040d, type: 3}
+  m_jumpSnd2: {fileID: 8300000, guid: 65bebf021bc046842943137c63cff48e, type: 3}
+  m_jumpSnd3: {fileID: 8300000, guid: cf1d3036ddc527943a22e9378cee137b, type: 3}
 --- !u!114 &11411702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1265,8 +1339,8 @@ MonoBehaviour:
   m_hurtTime: 1
   m_hurtForce: 20
   m_playerMat: {fileID: 2100000, guid: bd5f57b9e186e074197171ce2b76e943, type: 2}
-  m_hurtCol: {r: 1, g: 0, b: .682758331, a: 1}
-  m_blinkSpd: 100
+  m_hurtCol: {r: 1, g: .264705896, b: .523326576, a: 1}
+  m_blinkSpd: 30
 --- !u!114 &11487576
 MonoBehaviour:
   m_ObjectHideFlags: 1

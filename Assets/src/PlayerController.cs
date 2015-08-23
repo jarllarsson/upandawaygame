@@ -48,6 +48,11 @@ public class PlayerController : MonoBehaviour
     private bool m_jumpButtonDown = false;
     private bool m_jumpButtonReleased = true;
     private float m_jumpInputVal;
+
+
+
+    public AudioSource m_audioSource;
+    public AudioClip m_jumpSnd1,m_jumpSnd2,m_jumpSnd3;
 	// Use this for initialization
 	void Start () 
     {
@@ -164,13 +169,13 @@ public class PlayerController : MonoBehaviour
         switch (m_jumpCount)
         {
             case 0:
-                jump(m_jumpPower,p_manualTriggerOption); break;
+                if (jump(m_jumpPower,p_manualTriggerOption)) {m_audioSource.PlayOneShot(m_jumpSnd1);} break;
             case 1:
-                jump(m_doubleJumpPower,p_manualTriggerOption); break;
+                if (jump(m_doubleJumpPower,p_manualTriggerOption)) {m_audioSource.PlayOneShot(m_jumpSnd2);} break;
             case 2:
-                jump(m_tripleJumpPower,p_manualTriggerOption); break;
+                if (jump(m_tripleJumpPower,p_manualTriggerOption)) {m_audioSource.PlayOneShot(m_jumpSnd3);} break;
             default:
-                jump(m_jumpPower,p_manualTriggerOption); break;
+                if (jump(m_jumpPower,p_manualTriggerOption)) {m_audioSource.PlayOneShot(m_jumpSnd1);} break;
         }
     }
 
@@ -224,14 +229,16 @@ public class PlayerController : MonoBehaviour
         m_velocity *= m_velocityFallof;
     }
 
-    void jump(float p_pwr, bool p_force=false)
+    bool jump(float p_pwr, bool p_force=false)
     {
         if (isJumpBtnDown() || p_force)
         {
             setToJumpStatus(p_force);
             m_currentJumpForce = p_pwr;
             m_rbody.velocity = new Vector3(m_rbody.velocity.x, m_currentJumpForce*0.03f, m_rbody.velocity.z);
+            return true;
         }
+        return false;
     }
 
     void setToJumpStatus(bool p_force=false)

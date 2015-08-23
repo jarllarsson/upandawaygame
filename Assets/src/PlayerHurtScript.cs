@@ -76,7 +76,7 @@ public class PlayerHurtScript : MonoBehaviour
     {
         
         Debug.Log(p_coll.gameObject.tag);
-        if (p_coll.gameObject.tag == m_monsterTag && m_hurtCounter<=0.0f && m_rbody.velocity.y>=-0.1f)
+        if (p_coll.gameObject.tag == m_monsterTag && m_hurtCounter<=0.0f && m_rbody.velocity.y>=-0.01f)
         {
             m_hurtCounter=m_hurtTime;
             if (p_coll.contacts.Length>0)

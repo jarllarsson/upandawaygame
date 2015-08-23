@@ -6366,18 +6366,6 @@ Prefab:
       propertyPath: m_cameraRig
       value: 
       objectReference: {fileID: 1410180446}
-    - target: {fileID: 11487302, guid: ac59787612be40646b79db414bf5425a, type: 2}
-      propertyPath: m_hurtCol.b
-      value: .523326576
-      objectReference: {fileID: 0}
-    - target: {fileID: 11487302, guid: ac59787612be40646b79db414bf5425a, type: 2}
-      propertyPath: m_hurtCol.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11487302, guid: ac59787612be40646b79db414bf5425a, type: 2}
-      propertyPath: m_hurtCol.g
-      value: .264705896
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ac59787612be40646b79db414bf5425a, type: 2}
   m_IsPrefabParent: 0
