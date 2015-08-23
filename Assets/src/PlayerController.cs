@@ -142,6 +142,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool isJumping()
+    {
+        return m_isJumping;
+    }
+
+    public float getPlaneMovementSpeed()
+    {
+        Vector3 move = m_rbody.velocity;
+        move.y = 0.0f;
+        return move.magnitude;
+    }
+
+    public Vector3 getVelocity()
+    {
+        Vector3 move = m_rbody.velocity;
+        return move;
+    }
+
     public void triggerJump(bool p_manualTriggerOption=false)
     {
         switch (m_jumpCount)
