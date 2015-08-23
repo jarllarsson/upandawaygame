@@ -13,7 +13,6 @@
 		// #pragma surface surf Standard fullforwardshadows
 		#pragma surface surf NoLighting noambient
 
-		#define UNITY_PASS_FORWARDBASE
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0

@@ -5,12 +5,15 @@ public class PlayerController : MonoBehaviour
 {
     public Rigidbody m_rbody;
     public float m_maxSpeed = 1.0f;
+    public float m_acceleration = 1.0f;
+    public float m_velocityFallof = 0.8f;
     public Transform m_groundCheckPoint;
     public float m_groundCheckRadius = 0.3f;
     public LayerMask m_groundLayer;
     private bool m_isOnGround;
     private Vector3 m_inputDir;
     private Vector3 m_steerDir;
+    private Vector3 m_velocity;
     private Vector3 m_moveDir;
 
     public Transform m_playerSteerFacing;
@@ -198,7 +201,10 @@ public class PlayerController : MonoBehaviour
         if (magnitude > 0.001f) m_isSteering = true; else m_isSteering = false;
         if (magnitude > 1.0f) m_inputDir.Normalize();
         setDirection();
-        m_rbody.velocity = new Vector3(m_maxSpeed * m_multiplier * m_moveDir.x, m_rbody.velocity.y, m_maxSpeed * m_multiplier * m_moveDir.z);
+        m_velocity += new Vector3(m_acceleration * m_multiplier * m_moveDir.x, 0.0f, m_acceleration * m_multiplier * m_moveDir.z);
+        if (m_velocity.magnitude > m_maxSpeed) m_velocity = m_velocity.normalized * m_maxSpeed;
+        m_rbody.velocity = new Vector3(m_velocity.x,m_rbody.velocity.y,m_velocity.z);
+        m_velocity *= m_velocityFallof;
     }
 
     void jump(float p_pwr, bool p_force=false)
