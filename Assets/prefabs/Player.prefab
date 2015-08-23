@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 462686}
-  - 33: {fileID: 3341630}
   m_Layer: 0
   m_Name: PlayerMesh
   m_TagString: Untagged
@@ -347,6 +346,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &153892
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 452636}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &158928
 GameObject:
   m_ObjectHideFlags: 1
@@ -387,6 +401,21 @@ GameObject:
   - 4: {fileID: 423266}
   m_Layer: 0
   m_Name: tail_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &163800
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 471014}
+  m_Layer: 0
+  m_Name: jumpRotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -812,6 +841,19 @@ Transform:
   - {fileID: 464060}
   m_Father: {fileID: 484092}
   m_RootOrder: 2
+--- !u!4 &452636
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 456642}
+  m_Father: {fileID: 471014}
+  m_RootOrder: 0
 --- !u!4 &456362
 Transform:
   m_ObjectHideFlags: 1
@@ -836,7 +878,7 @@ Transform:
   m_Children:
   - {fileID: 429728}
   - {fileID: 437034}
-  m_Father: {fileID: 462686}
+  m_Father: {fileID: 452636}
   m_RootOrder: 0
 --- !u!4 &457498
 Transform:
@@ -874,7 +916,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .616928697, y: .616928697, z: .616928697}
   m_Children:
-  - {fileID: 456642}
+  - {fileID: 471014}
   m_Father: {fileID: 499072}
   m_RootOrder: 0
 --- !u!4 &462922
@@ -902,6 +944,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 451294}
+  m_RootOrder: 0
+--- !u!4 &471014
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 452636}
+  m_Father: {fileID: 462686}
   m_RootOrder: 0
 --- !u!4 &472416
 Transform:
@@ -1084,13 +1139,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135402}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &3341630
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100972}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3346716
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1173,6 +1221,7 @@ MonoBehaviour:
   m_camPivotToOffsetOnJump: {fileID: 450622}
   m_camLookatOffsetUpOnJump: -3
   m_camLookatToOffsetOnJump: {fileID: 432672}
+  m_transformToRotateOnJump: {fileID: 471014}
   m_jumpSquisher: {fileID: 11450254}
   m_doubleJumpCountCoolDownLim: .300000012
   m_holdJumpDiminishForce: .800000012
