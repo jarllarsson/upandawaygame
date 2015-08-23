@@ -73,6 +73,7 @@ ModelImporter:
     7400004: Jump
     7400006: Run
     7400008: Standard
+    7400010: Fall
     9500000: //RootNode
     13700000: Head
     13700002: Player
