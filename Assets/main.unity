@@ -20,18 +20,18 @@ RenderSettings:
   m_FogDensity: .00999999978
   m_LinearFogStart: 10
   m_LinearFogEnd: 1500
-  m_AmbientSkyColor: {r: .610294104, g: .610294104, b: .610294104, a: 1}
-  m_AmbientEquatorColor: {r: .56055361, g: .644691229, b: .705882311, a: 1}
-  m_AmbientGroundColor: {r: .072988756, g: .0886334702, b: .397058845, a: 1}
+  m_AmbientSkyColor: {r: 1, g: .786764741, b: .994117677, a: 1}
+  m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientGroundColor: {r: .23583822, g: 0, b: .426470578, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 1
+  m_AmbientMode: 3
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 1
+  m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 0
@@ -745,7 +745,7 @@ Transform:
   m_LocalScale: {x: 513.149109, y: 30.4033775, z: 526.942505}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 3
 --- !u!1 &302116975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1246,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 6
   m_Type: 1
-  m_Color: {r: 1, g: .956862748, b: .839215696, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1596,7 +1596,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 559118765}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1804,7 +1804,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 582286843}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -3660,7 +3660,7 @@ Transform:
   m_LocalScale: {x: 8000, y: 8000, z: 8000}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!1 &1059698135
 GameObject:
   m_ObjectHideFlags: 0
@@ -4728,7 +4728,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1502547244}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5404,7 +5404,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 09a79ca2bef2434429604f39b3c1a6d2, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400044, guid: 09a79ca2bef2434429604f39b3c1a6d2, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5421,6 +5421,10 @@ Prefab:
     - target: {fileID: 400044, guid: 09a79ca2bef2434429604f39b3c1a6d2, type: 3}
       propertyPath: m_LocalRotation.w
       value: .500000119
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700002, guid: 09a79ca2bef2434429604f39b3c1a6d2, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09a79ca2bef2434429604f39b3c1a6d2, type: 3}
@@ -5607,7 +5611,7 @@ GameObject:
   - 64: {fileID: 1934014845}
   - 23: {fileID: 1934014844}
   m_Layer: 8
-  m_Name: instr3 (1)
+  m_Name: instr4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5643,7 +5647,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1934014843}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
