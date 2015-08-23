@@ -279,6 +279,17 @@ public class PlayerController : MonoBehaviour
             m_isOnGround = false;
     }
 
+    void OnCollisionEnter(Collision p_coll)
+    {
+        if (p_coll.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Debug.Log("Wall");
+            Vector3 normal=p_coll.contacts[0].normal;
+            if (p_coll.collider.gameObject.tag=="Bouncy")
+                m_rbody.AddForceAtPosition(p_coll.contacts[0].normal*1000.0f, p_coll.contacts[0].point);
+        }
+    }
+
     void OnDrawGizmos()
     {
         if (m_groundCheckPoint) Gizmos.DrawSphere(m_groundCheckPoint.position, m_groundCheckRadius);
