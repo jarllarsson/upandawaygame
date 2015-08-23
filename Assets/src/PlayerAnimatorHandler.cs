@@ -5,6 +5,7 @@ public class PlayerAnimatorHandler : MonoBehaviour
 {
     public PlayerController m_playerController;
     public Animator m_anim;
+    public bool m_useIsJumping = true;
     int m_jumpHash = Animator.StringToHash("IsJumping");
     int m_speedHash = Animator.StringToHash("Speed");
     int m_yVelocityHash = Animator.StringToHash("yVel");
@@ -17,7 +18,7 @@ public class PlayerAnimatorHandler : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        m_anim.SetBool(m_jumpHash, m_playerController.isJumping());
+        if (m_useIsJumping) m_anim.SetBool(m_jumpHash, m_playerController.isJumping());
         m_anim.SetFloat(m_speedHash, m_playerController.getPlaneMovementSpeed());
         m_anim.SetFloat(m_yVelocityHash, m_playerController.getVelocity().y);
 	}

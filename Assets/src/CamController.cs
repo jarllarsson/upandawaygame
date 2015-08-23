@@ -47,9 +47,13 @@ public class CamController : MonoBehaviour {
         float goaldist = m_distanceFacingForward;
         // Distance depends on facing and if player is walking:
         if (Vector3.Dot(transform.forward, m_lookAtInternalFacing.forward) < -0.5f && m_playerController.isSteering()) goaldist = m_distanceFacingBackward;
-        m_currentDist = Mathf.SmoothDamp(m_currentDist, goaldist, ref m_currentDistVel, m_distChangingTime);
+        m_currentDist = Mathf.Lerp(m_currentDist, goaldist, 0.01f);
+            //Mathf.SmoothDamp(m_currentDist, goaldist, ref m_currentDistVel, m_distChangingTime);
+        if (System.Double.IsNaN(xAngle)) Debug.Log("xnan");
+        if (System.Double.IsNaN(yAngle)) Debug.Log("ynan");
         // Update new position
-        position += Quaternion.Euler(xAngle, yAngle, 0) * new Vector3(0, 0, -m_currentDist);
+        Quaternion rot = Quaternion.Euler(xAngle, yAngle, 0);
+        position += rot * new Vector3(0, 0, -m_currentDist);
         transform.position = position;
         transform.LookAt(m_lookAt);
         // note! We want this rig to only rotate along y
@@ -59,5 +63,6 @@ public class CamController : MonoBehaviour {
         m_camXAngleContainer.localRotation = Quaternion.Euler(internalXAngle, 0.0f, 0.0f);
         // And the rest on the lookat
         m_internalRotationContainer.LookAt(m_lookAt); // however, this internal controller can do that
+        
 	}
 }

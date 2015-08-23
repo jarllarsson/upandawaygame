@@ -355,7 +355,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 452636}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: animationContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,7 +848,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 456642}
@@ -952,7 +952,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452636}
@@ -1210,6 +1210,7 @@ MonoBehaviour:
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  m_hurtScript: {fileID: 0}
   m_playerSteerFacing: {fileID: 499072}
   m_pointOfViewRunning: {fileID: 0}
   m_pointOfViewJumping: {fileID: 0}
@@ -1238,6 +1239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerController: {fileID: 11411054}
   m_anim: {fileID: 9586986}
+  m_useIsJumping: 1
 --- !u!114 &11413260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1325,9 +1327,13 @@ MonoBehaviour:
   - {fileID: 11450372}
   - {fileID: 0}
   m_killAreaTag: KillArea
+  m_monsterTag: Monster
   m_checkPoints: {fileID: 11491898}
   m_waitTimeForRespawn: 1
   m_cameraRig: {fileID: 0}
+  m_rbody: {fileID: 5400268}
+  m_hurtTime: 1
+  m_hurtForce: 100
 --- !u!114 &11487576
 MonoBehaviour:
   m_ObjectHideFlags: 1

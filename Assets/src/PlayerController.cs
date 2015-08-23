@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_velocity;
     private Vector3 m_moveDir;
 
+
     public Transform m_playerSteerFacing;
     public Transform m_pointOfViewRunning;
     public Transform m_pointOfViewJumping;
@@ -303,12 +304,15 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision p_coll)
     {
-        if (p_coll.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (p_coll.contacts.Length > 0)
         {
-            Debug.Log("Wall");
-            Vector3 normal=p_coll.contacts[0].normal;
-            if (p_coll.collider.gameObject.tag=="Bouncy")
-                m_rbody.AddForceAtPosition(p_coll.contacts[0].normal*1000.0f, p_coll.contacts[0].point);
+            if (p_coll.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Debug.Log("Wall");
+                Vector3 normal = p_coll.contacts[0].normal;
+                if (p_coll.collider.gameObject.tag == "Bouncy")
+                    m_rbody.AddForceAtPosition(p_coll.contacts[0].normal * 1000.0f, p_coll.contacts[0].point);
+            }
         }
     }
 
