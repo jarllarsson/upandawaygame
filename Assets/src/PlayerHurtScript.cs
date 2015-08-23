@@ -13,10 +13,14 @@ public class PlayerHurtScript : MonoBehaviour
     public float m_hurtTime = 0;
     private float m_hurtCounter = 0.0f;
     public float m_hurtForce = 100.0f;
-
+    public Material m_playerMat;
+    public Color m_hurtCol;
+    private Color m_origCol;
+    public float m_blinkSpd;
+    private Vector3 m_hurtVec;
 	// Use this for initialization
 	void Start () {
-	
+        m_origCol = m_playerMat.color;
 	}
 	
 	// Update is called once per frame
@@ -25,13 +29,33 @@ public class PlayerHurtScript : MonoBehaviour
 	    if (m_hurtCounter>0.0f)
         {
             m_hurtCounter -= Time.deltaTime;
+            m_playerMat.color = Color.Lerp(m_hurtCol, m_origCol, Mathf.Sin(m_blinkSpd*(1.0f - m_hurtCounter / m_hurtTime)));
             if (m_hurtCounter<=0.0f)
             {
-                foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
-                    script.enabled = true;
+                m_playerMat.color = m_origCol;
+                m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+                //foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
+                //    script.enabled = true;
             }
         }
 	}
+
+    void FixedUpdate()
+    {
+        if (m_hurtCounter > 0.0f)
+        {
+            m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (m_hurtCounter > 0.0f)
+        {
+            m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+        }
+    }
+
 
     public void hurt(int p_hp)
     {
@@ -52,16 +76,19 @@ public class PlayerHurtScript : MonoBehaviour
     {
         
         Debug.Log(p_coll.gameObject.tag);
-        if (p_coll.gameObject.tag == m_monsterTag && m_hurtCounter<=0.0f)
+        if (p_coll.gameObject.tag == m_monsterTag && m_hurtCounter<=0.0f && m_rbody.velocity.y>=-0.1f)
         {
             m_hurtCounter=m_hurtTime;
             if (p_coll.contacts.Length>0)
             {
                 ContactPoint p = p_coll.contacts[0];
                 Vector3 normal = p.normal;
-                m_rbody.AddForceAtPosition(normal * m_hurtForce + Vector3.up * m_hurtForce, p.point, ForceMode.Impulse);
-                foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
-                    script.enabled = false;
+                //m_rbody.AddForceAtPosition(normal * m_hurtForce + Vector3.up * m_hurtForce, p.point, ForceMode.Impulse);
+                if (normal.magnitude > 0) m_hurtVec = normal; else m_hurtVec = new Vector3(Random.Range(-1.0f, 1.0f), 0.1f, Random.Range(-1.0f, 1.0f));
+                //m_rbody.MovePosition(m_rbody.position + m_hurtVec * 3.0f);
+                m_hurtVec*=m_hurtForce;
+                //foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
+                //    script.enabled = false;
             }
         }
          

@@ -260,23 +260,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &135402
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 437872}
-  - 33: {fileID: 3329242}
-  - 23: {fileID: 2377146}
-  m_Layer: 0
-  m_Name: ForwardDbg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &137730
 GameObject:
   m_ObjectHideFlags: 1
@@ -429,8 +412,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 472416}
-  - 136: {fileID: 13650814}
-  - 65: {fileID: 6593140}
+  - 135: {fileID: 13530388}
   m_Layer: 0
   m_Name: MainBody
   m_TagString: Untagged
@@ -767,18 +749,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 456642}
   m_RootOrder: 1
---- !u!4 &437872
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135402}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .5, z: .529999971}
-  m_LocalScale: {x: .343957752, y: .285725355, z: 1}
-  m_Children: []
-  m_Father: {fileID: 499072}
-  m_RootOrder: 1
 --- !u!4 &444392
 Transform:
   m_ObjectHideFlags: 1
@@ -1081,33 +1051,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 462686}
-  - {fileID: 437872}
   m_Father: {fileID: 474824}
   m_RootOrder: 3
---- !u!23 &2377146
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135402}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: bd5f57b9e186e074197171ce2b76e943, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!23 &2378306
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1116,12 +1061,12 @@ MeshRenderer:
   m_GameObject: {fileID: 133950}
   m_Enabled: 0
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: 4d3cf5ccb6c62ea4b8bfd8c106bb4199, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
+  m_UseLightProbes: 0
   m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
@@ -1132,13 +1077,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3329242
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135402}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3346716
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1161,18 +1099,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &6593140
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167374}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1.92999995, y: 1.47000003, z: 1.79999995}
-  m_Center: {x: 0, y: .699999988, z: 0}
 --- !u!95 &9586986
 Animator:
   serializedVersion: 3
@@ -1210,7 +1136,6 @@ MonoBehaviour:
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  m_hurtScript: {fileID: 0}
   m_playerSteerFacing: {fileID: 499072}
   m_pointOfViewRunning: {fileID: 0}
   m_pointOfViewJumping: {fileID: 0}
@@ -1252,6 +1177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerController: {fileID: 11411054}
+  m_hurtScript: {fileID: 11487302}
 --- !u!114 &11421416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1326,6 +1252,10 @@ MonoBehaviour:
   - {fileID: 11413260}
   - {fileID: 11450372}
   - {fileID: 0}
+  m_scriptsToDisableOnMonster:
+  - {fileID: 11411054}
+  - {fileID: 11413260}
+  - {fileID: 11450372}
   m_killAreaTag: KillArea
   m_monsterTag: Monster
   m_checkPoints: {fileID: 11491898}
@@ -1333,7 +1263,10 @@ MonoBehaviour:
   m_cameraRig: {fileID: 0}
   m_rbody: {fileID: 5400268}
   m_hurtTime: 1
-  m_hurtForce: 100
+  m_hurtForce: 20
+  m_playerMat: {fileID: 2100000, guid: bd5f57b9e186e074197171ce2b76e943, type: 2}
+  m_hurtCol: {r: 1, g: 0, b: .682758331, a: 1}
+  m_blinkSpd: 100
 --- !u!114 &11487576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1381,6 +1314,18 @@ Projector:
   m_IgnoreLayers:
     serializedVersion: 2
     m_Bits: 0
+--- !u!135 &13530388
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167374}
+  m_Material: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 1.25999999
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!135 &13553168
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -1393,19 +1338,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &13650814
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167374}
-  m_Material: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .889999986
-  m_Height: 2.78999996
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.34000003, z: 0}
 --- !u!137 &13757516
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
