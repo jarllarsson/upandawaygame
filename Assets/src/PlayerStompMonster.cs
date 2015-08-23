@@ -8,6 +8,7 @@ public class PlayerStompMonster : MonoBehaviour
     public LayerMask m_monsterLayer;
     public PlayerController m_playerController;
     public Rigidbody m_rbody;
+    public Renderer m_happyTailEffect;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,14 @@ public class PlayerStompMonster : MonoBehaviour
     {
         if (m_rbody.velocity.y<-0.01f) monsterStompCheck();
     }
+
+    IEnumerator happyTailEffect()
+    {
+        m_happyTailEffect.enabled = true;
+        yield return new WaitForSeconds(2.0f);
+        m_happyTailEffect.enabled = false;
+    }
+    
 
     void monsterStompCheck()
     {
@@ -41,6 +50,7 @@ public class PlayerStompMonster : MonoBehaviour
                     {
                         gotAHit = true;
                         monster.hitByPlayer();
+                        StartCoroutine(happyTailEffect());
                         break; // break loop
                     }
                 }

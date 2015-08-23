@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
     public float m_camLookatOffsetUpOnJump = 5.0f;
     public Transform m_camLookatToOffsetOnJump;
     private Vector3 m_camLookatOriginalLPos;
+    public Transform m_transformToRotateOnJump;
 
-    public Material m_debugMaterial;
     public SquishStretch m_jumpSquisher;
 
     // Jump vars
@@ -57,20 +57,6 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (m_debugMaterial)
-        {
-            switch (m_jumpCount)
-            {
-                case 0:
-                    m_debugMaterial.color = Color.white; break;
-                case 1:
-                    m_debugMaterial.color = Color.green; break;
-                case 2:
-                    m_debugMaterial.color = Color.blue; break;
-                case 3:
-                    m_debugMaterial.color = Color.red; break;
-            }
-        }
 
 
 	}
@@ -115,6 +101,7 @@ public class PlayerController : MonoBehaviour
             m_isJumping = false;
             steer(1.0f);
             coolDownDoubleJumpCount(); // Count the jumps
+            if (m_transformToRotateOnJump!=null) m_transformToRotateOnJump.localEulerAngles = Vector3.zero;
             // Reset cam pivot
             if (m_camPivotToOffsetOnJump)
                 m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos, Time.deltaTime * 1.0f);
@@ -139,6 +126,17 @@ public class PlayerController : MonoBehaviour
             // While jumping
             m_jumpCountCoolDown = 0.0f; // reset jump counter cooldown, start afresh
             doJump(); // having this here allows the user to hold down button for a while for higher jump!
+            // rotate
+            if (m_transformToRotateOnJump != null)
+            {
+                switch (m_jumpCount)
+                {
+                    case 2:
+                        m_transformToRotateOnJump.localRotation *= Quaternion.Euler(new Vector3(0.0f, 10.0f, 0.0f)); break;
+                    case 3:
+                        m_transformToRotateOnJump.localRotation *= Quaternion.Euler(new Vector3(-15.0f, 0.0f, 0.0f)); break;
+                }
+            }
         }
     }
 
@@ -246,7 +244,7 @@ public class PlayerController : MonoBehaviour
             if (m_jumpSquisher)
             {
                 m_jumpSquisher.setStart(new Vector3(1.0f, 0.7f, 1.0f));
-                m_jumpSquisher.setGoal(new Vector3(1.0f, 1.8f, 1.0f), (3-m_jumpCount)*0.08f, true, m_jumpCount*0.15f);
+                m_jumpSquisher.setGoal(new Vector3(1.0f, 1.3f, 1.0f), (3-m_jumpCount)*0.08f, true, m_jumpCount*0.15f);
             }
         }
     }

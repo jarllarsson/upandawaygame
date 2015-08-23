@@ -11,7 +11,7 @@ public class Shaker : MonoBehaviour
     private float m_timeTicker = 0.0f;
     public float m_easeInAmplitudeTime;
     private Vector3 m_easingVelocity;
-    private bool m_isShaking;
+    public bool m_isShaking;
     private Vector3 m_originalLPos;
 	// Use this for initialization
 	void Start () 
@@ -27,9 +27,9 @@ public class Shaker : MonoBehaviour
             m_transform.localPosition = m_originalLPos + new Vector3(m_shakeAmplitude.x * Mathf.Sin(m_timeTicker * m_frequencyPower.x + m_frequencyOffset.x),
                 m_shakeAmplitude.y * Mathf.Sin(m_timeTicker * m_frequencyPower.y + m_frequencyOffset.y),
                 m_shakeAmplitude.z * Mathf.Sin(m_timeTicker * m_frequencyPower.z + m_frequencyOffset.z));
-            m_shakeAmplitude = Vector3.SmoothDamp(m_shakeAmplitude, Vector3.zero, ref m_easingVelocity,m_easeInAmplitudeTime);
+            if (m_time>0.0f) m_shakeAmplitude = Vector3.SmoothDamp(m_shakeAmplitude, Vector3.zero, ref m_easingVelocity,m_easeInAmplitudeTime);
             m_timeTicker += Time.deltaTime;
-            if (m_timeTicker >= m_time)
+            if (m_time>0.0f && m_timeTicker >= m_time)
             {
                 m_isShaking = false;
                 m_transform.localPosition = m_originalLPos;
