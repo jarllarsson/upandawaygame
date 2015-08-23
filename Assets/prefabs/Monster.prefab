@@ -342,7 +342,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -93.6500015, y: 15.4200001, z: 69.5999985}
+  m_LocalPosition: {x: -91.3235703, y: 6.34035015, z: 79.0135193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 442516}
@@ -655,6 +655,7 @@ MonoBehaviour:
   m_blinkSpd: 20
   m_audioSource: {fileID: 8215700}
   m_dieSound: {fileID: 8300000, guid: b1d46d12f3025fe449931ec2a7288875, type: 3}
+  m_killAreaTag: KillArea
 --- !u!114 &11473662
 MonoBehaviour:
   m_ObjectHideFlags: 1

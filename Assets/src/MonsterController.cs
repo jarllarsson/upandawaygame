@@ -16,6 +16,7 @@ public class MonsterController : MonoBehaviour
 
     public AudioSource m_audioSource;
     public AudioClip m_dieSound;
+    public string m_killAreaTag;
 
 	// Use this for initialization
 	void Start () {
@@ -56,4 +57,14 @@ public class MonsterController : MonoBehaviour
         }
         StartCoroutine(die());
     }
+
+    void OnTriggerEnter(Collider p_coll)
+    {
+        Debug.Log(p_coll.gameObject.tag);
+        if (p_coll.gameObject.tag == m_killAreaTag)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

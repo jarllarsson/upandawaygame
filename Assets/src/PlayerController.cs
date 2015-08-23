@@ -296,7 +296,10 @@ public class PlayerController : MonoBehaviour
 
     void groundCheck()
     {
-        Collider[] hits = Physics.OverlapSphere(m_groundCheckPoint.position, m_groundCheckRadius, m_groundLayer);
+        //RaycastHit hitInfo;
+        //bool hit = Physics.SphereCast(new Ray(m_groundCheckPoint.position - Vector3.up * m_groundCheckRadius, Vector3.down), m_groundCheckRadius, out hitInfo, m_groundCheckRadius*3.0f, m_groundLayer);
+            Collider[] hits = Physics.OverlapSphere(m_groundCheckPoint.position, m_groundCheckRadius, m_groundLayer);
+        //if (hit)
         if (hits.Length > 0)
         {
             if (!m_isOnGround && m_rbody.velocity.y < -10.0f)

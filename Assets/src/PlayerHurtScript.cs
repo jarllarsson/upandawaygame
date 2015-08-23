@@ -106,6 +106,7 @@ public class PlayerHurtScript : MonoBehaviour
         foreach (MonoBehaviour script in m_scriptsToDisableOnDeath)
             script.enabled = false;
         m_hurtCounter = 0.0f;
+        m_playerMat.color = m_origCol;
         // Wait a little...
         yield return new WaitForSeconds(m_waitTimeForRespawn);
         Debug.Log("Respawn");
