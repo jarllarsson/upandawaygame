@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: groundtest1
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: platform3
+  m_Shader: {fileID: 4800000, guid: 1557a992e686a59499ca74afb6f6f379, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -19,8 +19,8 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
-          m_Scale: {x: 5, y: 5}
+          m_Texture: {fileID: 2800000, guid: d40fbf9e40653cb4f8dfb8f1f698b918, type: 3}
+          m_Scale: {x: 2, y: 2}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -78,6 +78,27 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MainTexTop
+        second:
+          m_Texture: {fileID: 2800000, guid: d40fbf9e40653cb4f8dfb8f1f698b918, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MainTexSides
+        second:
+          m_Texture: {fileID: 2800000, guid: 4ef0cc184f1891349821bcbab31c8e81, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MainTexBottom
+        second:
+          m_Texture: {fileID: 2800000, guid: 4ef0cc184f1891349821bcbab31c8e81, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -87,6 +108,10 @@ Material:
         first:
           name: _DstBlend
         second: 0
+      data:
+        first:
+          name: _Scale
+        second: .0799999982
       data:
         first:
           name: _Cutoff
@@ -102,7 +127,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .169
+        second: 0
       data:
         first:
           name: _BumpScale
@@ -139,8 +164,20 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .683823526, g: .464597762, b: .135759085, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _EmissionColorUI
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ColorTop
+        second: {r: .669072926, g: .735294104, b: .605536342, a: 1}
+      data:
+        first:
+          name: _ColorBottom
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ColorSides
         second: {r: 1, g: 1, b: 1, a: 1}
