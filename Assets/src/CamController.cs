@@ -47,7 +47,7 @@ public class CamController : MonoBehaviour {
             m_turnbackTimeTick -= Time.deltaTime;
         if (m_turnbackTimeTick<=0.0f)
         {
-            m_goalAngleY=Mathf.Lerp(m_goalAngleY,m_lookAtInternalFacing.rotation.eulerAngles.y,0.01f);
+            m_goalAngleY=Mathf.LerpAngle(m_goalAngleY,m_lookAtInternalFacing.rotation.eulerAngles.y,0.01f);
         }
         m_goalAngleY += mouseMovement.x * m_rotationStepMouse;
         m_goalAngleX -= mouseMovement.y * m_rotationStepMouse;

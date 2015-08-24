@@ -8002,7 +8002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rotationTimeY: .00999999978
   m_rotationStepMouse: 4
-  m_rotationStepJoyY: 5
+  m_rotationStepJoyY: 3
   m_rotationStepJoyX: 5
   m_rotationTimeX: .00999999978
   m_minXAngle: -6

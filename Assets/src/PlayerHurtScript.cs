@@ -30,6 +30,8 @@ public class PlayerHurtScript : MonoBehaviour
 	void Start () {
         m_origCol = m_playerRenderer.material.color;
         m_healthText.text = m_hp.ToString();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
 	}
 	
 	// Update is called once per frame
