@@ -121,7 +121,7 @@ public class PlayerHurtScript : MonoBehaviour
                 //m_rbody.MovePosition(m_rbody.position + m_hurtVec * 3.0f);
                 m_hurtVec*=m_hurtForce;
                 hurt(1);
-                
+                if (m_rbody.velocity.y > 0.0f) m_rbody.AddForce(Vector3.up * 10.0f);
                 m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
                 foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
                     script.enabled = false;
