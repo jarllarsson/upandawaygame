@@ -42,7 +42,9 @@ public class MonsterController : MonoBehaviour
             else // attack
             {
                 m_controller.m_maxSpeed = 4;
-                m_controller.setSteeringInput(dirPlayer.normalized);
+                Vector3 dirPlane = dirPlayer.normalized;
+                dirPlane.y = 0.0f;
+                m_controller.setSteeringInput(dirPlane.normalized);
             }
         }
         else

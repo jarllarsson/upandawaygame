@@ -11,6 +11,7 @@ public class EndStateEffect : MonoBehaviour {
     public bool m_pauseOnTrig = true;
     float ownTime = 0;
     public bool m_animate = true;
+    public string val = "_TintColor";
 
     private float m_alpha = 1.0f;
     public void activate()
@@ -27,8 +28,8 @@ public class EndStateEffect : MonoBehaviour {
 	void Start () 
     {
         ownTime = Time.realtimeSinceStartup;
-        Color col = m_rendererToRun.material.GetColor("_TintColor");
-        m_rendererToRun.material.SetColor("_TintColor",new Color(col.r,col.g,col.b,0.0f));
+        Color col = m_rendererToRun.material.GetColor(val);
+        m_rendererToRun.material.SetColor(val, new Color(col.r, col.g, col.b, 0.0f));
 	}
 
 	// Update is called once per frame
@@ -41,8 +42,8 @@ public class EndStateEffect : MonoBehaviour {
         }
 	    if (m_activated)
         {
-            Color col = m_rendererToRun.material.GetColor("_TintColor");
-            m_rendererToRun.material.SetColor("_TintColor", Color.Lerp(col, new Color(1.0f, 1.0f, 1.0f, 1.0f), 0.01f*ownTime));
+            Color col = m_rendererToRun.material.GetColor(val);
+            m_rendererToRun.material.SetColor(val, Color.Lerp(col, new Color(1.0f, 1.0f, 1.0f, 1.0f), 0.01f * ownTime));
             Debug.Log("!");
             if (col.a > 0.5f && Input.GetAxisRaw("Jump") > 0.0f)
             {

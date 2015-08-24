@@ -23,6 +23,9 @@ public class PlayerHurtScript : MonoBehaviour
     public EndStateEffect m_gameOver;
     public Text m_healthText;
     public string m_healTag;
+
+    public AudioSource m_audioSource;
+    public AudioClip m_healSound, m_hurtSnd;
 	// Use this for initialization
 	void Start () {
         m_origCol = m_playerRenderer.material.color;
@@ -36,13 +39,18 @@ public class PlayerHurtScript : MonoBehaviour
         {
             m_hurtCounter -= Time.deltaTime;
             m_playerRenderer.material.color = Color.Lerp(m_hurtCol, m_origCol, Mathf.Sin(m_blinkSpd * (1.0f - m_hurtCounter / m_hurtTime)));
+            m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
             if (m_hurtCounter<=0.0f)
             {
                 m_playerRenderer.material.color = m_origCol;
-                //m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
-                //foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
-                //    script.enabled = true;
+                m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+                foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
+                    script.enabled = true;
             }
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
         }
 	}
 
@@ -58,7 +66,7 @@ public class PlayerHurtScript : MonoBehaviour
     {
         if (m_hurtCounter > 0.0f)
         {
-            m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+            //m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
         }
     }
 
@@ -68,6 +76,7 @@ public class PlayerHurtScript : MonoBehaviour
         Debug.Log("Player hurt by "+p_hp);
         m_hp -= p_hp;
         m_healthText.text = m_hp.ToString();
+        m_audioSource.PlayOneShot(m_hurtSnd);
         if (m_hp <= 0)
             m_gameOver.activate();
     }
@@ -77,8 +86,7 @@ public class PlayerHurtScript : MonoBehaviour
     {
         m_hp += p_hp;
         m_healthText.text = m_hp.ToString();
-        if (m_hp <= 0)
-            m_gameOver.activate();
+        m_audioSource.PlayOneShot(m_healSound);
     }
 
 
@@ -106,14 +114,17 @@ public class PlayerHurtScript : MonoBehaviour
             if (p_coll.contacts.Length>0)
             {
                 ContactPoint p = p_coll.contacts[0];
-                Vector3 normal = p.normal;
+                Vector3 dir = transform.position-p_coll.gameObject.transform.position+Vector3.up;
                 //m_rbody.AddForceAtPosition(normal * m_hurtForce + Vector3.up * m_hurtForce, p.point, ForceMode.Impulse);
-                if (normal.magnitude > 0) m_hurtVec = normal; else m_hurtVec = new Vector3(Random.Range(-1.0f, 1.0f), 0.1f, Random.Range(-1.0f, 1.0f));
+                if (dir.magnitude > 0) m_hurtVec = dir; else m_hurtVec = new Vector3(Random.Range(-1.0f, 1.0f), 0.1f, Random.Range(-1.0f, 1.0f));
+                m_hurtVec.Normalize();
                 //m_rbody.MovePosition(m_rbody.position + m_hurtVec * 3.0f);
                 m_hurtVec*=m_hurtForce;
                 hurt(1);
-                //foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
-                //    script.enabled = false;
+                
+                m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+                foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
+                    script.enabled = false;
             }
         }
          
