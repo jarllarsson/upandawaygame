@@ -9310,6 +9310,11 @@ Prefab:
       propertyPath: m_hurtSnd
       value: 
       objectReference: {fileID: 8300000, guid: 830ff4037629fb0459b3f1225e27b187, type: 3}
+    - target: {fileID: 13553168, guid: ac59787612be40646b79db414bf5425a, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 74bc80f303b09424097157b879c870af,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ac59787612be40646b79db414bf5425a, type: 2}
   m_IsPrefabParent: 0
