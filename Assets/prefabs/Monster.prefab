@@ -650,12 +650,14 @@ MonoBehaviour:
   - {fileID: 141190}
   m_rbody: {fileID: 5424020}
   m_animateOnDeath: {fileID: 498570}
+  m_player: {fileID: 0}
   m_renderAnimOnDeath: {fileID: 13791610}
   m_hurtCol: {r: .300304025, g: 0, b: .926470578, a: 0}
   m_blinkSpd: 20
   m_audioSource: {fileID: 8215700}
   m_dieSound: {fileID: 8300000, guid: b1d46d12f3025fe449931ec2a7288875, type: 3}
   m_killAreaTag: KillArea
+  m_atkDist: 25
 --- !u!114 &11473662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -670,6 +672,7 @@ MonoBehaviour:
   m_playerController: {fileID: 11489570}
   m_anim: {fileID: 9574424}
   m_useIsJumping: 0
+  m_maxSpeed: 2
 --- !u!114 &11480502
 MonoBehaviour:
   m_ObjectHideFlags: 1

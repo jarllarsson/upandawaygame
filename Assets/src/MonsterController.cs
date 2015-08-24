@@ -7,6 +7,7 @@ public class MonsterController : MonoBehaviour
     public GameObject[] m_collidersToUntag;
     public Rigidbody m_rbody;
     public Transform m_animateOnDeath;
+    public Transform m_player;
     private bool m_die = false;
 
     public Renderer m_renderAnimOnDeath;
@@ -17,10 +18,11 @@ public class MonsterController : MonoBehaviour
     public AudioSource m_audioSource;
     public AudioClip m_dieSound;
     public string m_killAreaTag;
+    public float m_atkDist;
 
 	// Use this for initialization
 	void Start () {
-	
+        Random.seed = (int)(1000.0f*Time.time);
 	}
 	
 	// Update is called once per frame
@@ -28,8 +30,20 @@ public class MonsterController : MonoBehaviour
     {
         if (!m_die)
         {
-            if (Random.Range(0, 100) > 95)
-                m_controller.setSteeringInput(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)));
+            Vector3 dirPlayer = m_player.position - transform.position;
+            float distToPlayer = Vector3.Magnitude(dirPlayer);
+            if (distToPlayer>m_atkDist)
+            {
+                m_controller.m_maxSpeed = 2;
+                // normal walk
+                if (Random.Range(0, 200) > 195)
+                    m_controller.setSteeringInput(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)));
+            }
+            else // attack
+            {
+                m_controller.m_maxSpeed = 4;
+                m_controller.setSteeringInput(dirPlayer.normalized);
+            }
         }
         else
         {

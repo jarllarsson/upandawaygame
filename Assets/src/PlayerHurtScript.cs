@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerHurtScript : MonoBehaviour 
 {
@@ -13,14 +14,19 @@ public class PlayerHurtScript : MonoBehaviour
     public float m_hurtTime = 0;
     private float m_hurtCounter = 0.0f;
     public float m_hurtForce = 100.0f;
-    public Material m_playerMat;
+    public Renderer m_playerRenderer;
     public Color m_hurtCol;
     private Color m_origCol;
     public float m_blinkSpd;
     private Vector3 m_hurtVec;
+    public int m_hp;
+    public EndStateEffect m_gameOver;
+    public Text m_healthText;
+    public string m_healTag;
 	// Use this for initialization
 	void Start () {
-        m_origCol = m_playerMat.color;
+        m_origCol = m_playerRenderer.material.color;
+        m_healthText.text = m_hp.ToString();
 	}
 	
 	// Update is called once per frame
@@ -29,11 +35,11 @@ public class PlayerHurtScript : MonoBehaviour
 	    if (m_hurtCounter>0.0f)
         {
             m_hurtCounter -= Time.deltaTime;
-            m_playerMat.color = Color.Lerp(m_hurtCol, m_origCol, Mathf.Sin(m_blinkSpd*(1.0f - m_hurtCounter / m_hurtTime)));
+            m_playerRenderer.material.color = Color.Lerp(m_hurtCol, m_origCol, Mathf.Sin(m_blinkSpd * (1.0f - m_hurtCounter / m_hurtTime)));
             if (m_hurtCounter<=0.0f)
             {
-                m_playerMat.color = m_origCol;
-                m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
+                m_playerRenderer.material.color = m_origCol;
+                //m_rbody.velocity = new Vector3(m_hurtVec.x, m_rbody.velocity.y, m_hurtVec.z);
                 //foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
                 //    script.enabled = true;
             }
@@ -60,6 +66,19 @@ public class PlayerHurtScript : MonoBehaviour
     public void hurt(int p_hp)
     {
         Debug.Log("Player hurt by "+p_hp);
+        m_hp -= p_hp;
+        m_healthText.text = m_hp.ToString();
+        if (m_hp <= 0)
+            m_gameOver.activate();
+    }
+
+
+    public void heal(int p_hp)
+    {
+        m_hp += p_hp;
+        m_healthText.text = m_hp.ToString();
+        if (m_hp <= 0)
+            m_gameOver.activate();
     }
 
 
@@ -69,6 +88,11 @@ public class PlayerHurtScript : MonoBehaviour
         if (p_coll.gameObject.tag == m_killAreaTag)
         {
             StartCoroutine(respawn());
+        }
+        else if (p_coll.gameObject.tag == m_healTag)
+        {
+            heal(1);
+            Destroy(p_coll.gameObject);
         }
     }
 
@@ -87,6 +111,7 @@ public class PlayerHurtScript : MonoBehaviour
                 if (normal.magnitude > 0) m_hurtVec = normal; else m_hurtVec = new Vector3(Random.Range(-1.0f, 1.0f), 0.1f, Random.Range(-1.0f, 1.0f));
                 //m_rbody.MovePosition(m_rbody.position + m_hurtVec * 3.0f);
                 m_hurtVec*=m_hurtForce;
+                hurt(1);
                 //foreach (MonoBehaviour script in m_scriptsToDisableOnMonster)
                 //    script.enabled = false;
             }
@@ -106,7 +131,7 @@ public class PlayerHurtScript : MonoBehaviour
         foreach (MonoBehaviour script in m_scriptsToDisableOnDeath)
             script.enabled = false;
         m_hurtCounter = 0.0f;
-        m_playerMat.color = m_origCol;
+        m_playerRenderer.material.color = m_origCol;
         // Wait a little...
         yield return new WaitForSeconds(m_waitTimeForRespawn);
         Debug.Log("Respawn");

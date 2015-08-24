@@ -325,7 +325,7 @@ GameObject:
   - 82: {fileID: 8211602}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -5082302936091411984, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1239,6 +1239,7 @@ MonoBehaviour:
   m_playerController: {fileID: 11411054}
   m_anim: {fileID: 9586986}
   m_useIsJumping: 1
+  m_maxSpeed: 20
 --- !u!114 &11413260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1338,7 +1339,7 @@ MonoBehaviour:
   m_rbody: {fileID: 5400268}
   m_hurtTime: 1
   m_hurtForce: 20
-  m_playerMat: {fileID: 2100000, guid: bd5f57b9e186e074197171ce2b76e943, type: 2}
+  m_playerRenderer: {fileID: 13757516}
   m_hurtCol: {r: 1, g: .264705896, b: .523326576, a: 1}
   m_blinkSpd: 30
 --- !u!114 &11487576
