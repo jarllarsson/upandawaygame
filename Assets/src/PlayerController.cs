@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_steerDir;
     private Vector3 m_velocity;
     private Vector3 m_moveDir;
+    public float m_jumpGraceTime = 0.3f;
+    private float m_jumpGraceTimeTick=0.0f;
+    public float m_inutTimeSpdMultiplier=1.0f;
 
 
     public Transform m_playerSteerFacing;
@@ -123,7 +126,10 @@ public class PlayerController : MonoBehaviour
         }
         if (m_isJumping)
         {
-            steer(0.8f);
+            if (m_jumpCount < 3)
+                steer(0.8f);
+            else
+                steer(1.1f);
             // Offset cam pivot
             if (m_camPivotToOffsetOnJump)
                 m_camPivotToOffsetOnJump.localPosition = Vector3.Lerp(m_camPivotToOffsetOnJump.localPosition, m_camPivotOriginalLPos+Vector3.up*m_camOffsetUpOnJump, Time.deltaTime * 3.0f);
@@ -216,7 +222,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void steer(float m_multiplier)
+    void steer(float multiplier)
     {
         // Basic steering
         //m_inputDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
@@ -224,11 +230,18 @@ public class PlayerController : MonoBehaviour
         if (magnitude > 0.001f) m_isSteering = true; else m_isSteering = false;
         if (magnitude > 1.0f) m_inputDir.Normalize();
         setDirection();
-        float acc = Mathf.Clamp(Mathf.Max(m_velocity.magnitude,3.0f)*0.5f,0.05f,m_acceleration);
-        m_velocity += new Vector3(acc * m_multiplier * m_moveDir.x, 0.0f, acc * m_multiplier * m_moveDir.z);
-        if (m_velocity.magnitude > m_maxSpeed) m_velocity = m_velocity.normalized * m_maxSpeed;
-        m_rbody.velocity = new Vector3(m_velocity.x,m_rbody.velocity.y,m_velocity.z);
-        m_velocity *= m_velocityFallof;
+        float acc = m_acceleration;
+            //Mathf.Clamp(Mathf.Max(m_velocity.magnitude,3.0f)*0.5f,0.05f,m_acceleration);
+        //m_velocity += new Vector3(acc * m_moveDir.x, 0.0f, acc * m_moveDir.z);
+        m_velocity = new Vector3(acc*m_moveDir.x, 0.0f, acc*m_moveDir.z);
+        if (m_velocity.sqrMagnitude > 0.0f)
+        {
+            if (m_velocity.magnitude > m_maxSpeed) m_velocity = m_velocity.normalized * m_maxSpeed;
+            m_rbody.velocity = new Vector3(multiplier * m_velocity.x * m_inutTimeSpdMultiplier, m_rbody.velocity.y, multiplier * m_velocity.z * m_inutTimeSpdMultiplier);
+            //m_velocity *= m_velocityFallof;
+        }
+        else
+            m_rbody.velocity = new Vector3(0.00001f, m_rbody.velocity.y, 0.00001f);
     }
 
     bool jump(float p_pwr, bool p_force=false)
@@ -249,6 +262,7 @@ public class PlayerController : MonoBehaviour
         {            
             if (m_jumpCount > 2) m_jumpCount = 0;
             m_isJumping = true;
+            m_jumpGraceTimeTick = 0.0f;
             m_jumpCountCoolDown = 0.0f;
             m_jumpCount++;
             if (m_jumpSquisher)
@@ -298,10 +312,8 @@ public class PlayerController : MonoBehaviour
 
     void groundCheck()
     {
-        //RaycastHit hitInfo;
-        //bool hit = Physics.SphereCast(new Ray(m_groundCheckPoint.position - Vector3.up * m_groundCheckRadius, Vector3.down), m_groundCheckRadius, out hitInfo, m_groundCheckRadius*3.0f, m_groundLayer);
-            Collider[] hits = Physics.OverlapSphere(m_groundCheckPoint.position, m_groundCheckRadius, m_groundLayer);
-        //if (hit)
+        Collider[] hits = Physics.OverlapSphere(m_groundCheckPoint.position, m_groundCheckRadius, m_groundLayer);
+
         if (hits.Length > 0)
         {
             if (!m_isOnGround && m_rbody.velocity.y < -10.0f)
@@ -309,9 +321,14 @@ public class PlayerController : MonoBehaviour
                 m_jumpSquisher.setGoal(new Vector3(1.0f, 1.0f - Mathf.Clamp(Mathf.Abs(m_rbody.velocity.y * 0.1f), 0.0f, 0.8f), 1.0f), 0.05f, true, 0.05f);
             }
             m_isOnGround = true;
+            m_jumpGraceTimeTick = m_jumpGraceTime;
         }
         else
-            m_isOnGround = false;
+        {
+            m_jumpGraceTimeTick -= Time.deltaTime;
+            if (m_jumpGraceTimeTick<=0.0f)
+                m_isOnGround = false;
+        }
     }
 
     void OnCollisionEnter(Collision p_coll)
