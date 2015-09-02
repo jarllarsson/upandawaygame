@@ -38,21 +38,27 @@ public class CamController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
     {
+        float playerDirDotCameraDir=Vector3.Dot(transform.forward, m_lookAtInternalFacing.forward);
         // Get new angle
         Vector2 mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector2 joyMovement = new Vector2(Input.GetAxis("Joy X2"), Input.GetAxis("Joy Y2"));
-        if (mouseMovement.magnitude > 0.0f || joyMovement.magnitude > 0.0f || m_playerController.isSteering())
+        // automatically center camera behind player after a while of no input
+        if (mouseMovement.magnitude > 0.0f || joyMovement.magnitude > 0.0f || m_playerController.isJumping() || playerDirDotCameraDir<-0.7f || !m_playerController.isSteering())
             m_turnbackTimeTick = m_turnbackTime;
         else
             m_turnbackTimeTick -= Time.deltaTime;
         if (m_turnbackTimeTick<=0.0f)
         {
-            m_goalAngleY=Mathf.LerpAngle(m_goalAngleY,m_lookAtInternalFacing.rotation.eulerAngles.y,0.01f);
+            m_goalAngleY=Mathf.LerpAngle(m_goalAngleY,m_lookAtInternalFacing.rotation.eulerAngles.y,0.02f);
         }
+        // slowly turn camera behind player if no input, and not facing toward camera
+
+
+        // regular input driven movement
         m_goalAngleY += mouseMovement.x * m_rotationStepMouse;
         m_goalAngleX -= mouseMovement.y * m_rotationStepMouse;
-        m_goalAngleY += joyMovement.x * m_rotationStepJoyX;
-        m_goalAngleX -= joyMovement.y * m_rotationStepJoyY;
+        m_goalAngleY -= joyMovement.x * m_rotationStepJoyX;
+        m_goalAngleX += joyMovement.y * m_rotationStepJoyY;
         m_goalAngleX = Mathf.Clamp(m_goalAngleX, m_minXAngle, m_maxXAngle);
         // Get smoothed angle
         float yAngle = Mathf.SmoothDampAngle(transform.localRotation.eulerAngles.y, m_goalAngleY, ref m_rotationVelocityY, m_rotationTimeY);
@@ -61,7 +67,10 @@ public class CamController : MonoBehaviour {
         Vector3 position = m_cameraRotationPivot.position;
         float goaldist = m_distanceFacingForward;
         // Distance depends on facing and if player is walking:
-        if (Vector3.Dot(transform.forward, m_lookAtInternalFacing.forward) < -0.5f && m_playerController.isSteering()) goaldist = m_distanceFacingBackward;
+        if (playerDirDotCameraDir < -0.5f && m_playerController.isSteering())
+        {
+            goaldist = m_distanceFacingBackward;
+        }
         m_currentDist = Mathf.Lerp(m_currentDist, goaldist, 0.01f);
             //Mathf.SmoothDamp(m_currentDist, goaldist, ref m_currentDistVel, m_distChangingTime);
         if (System.Double.IsNaN(xAngle)) Debug.Log("xnan");

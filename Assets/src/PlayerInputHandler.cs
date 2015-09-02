@@ -24,7 +24,7 @@ public class PlayerInputHandler : MonoBehaviour {
 
             float inputMagnitude = inputVec.normalized.magnitude;
             Debug.Log(inputMagnitude);
-            if (inputMagnitude > 0.9f)
+            if (inputMagnitude > 0.0f)
             {
                 m_inputTime += inputMagnitude * m_inputTimeSpd * Time.deltaTime;
             }

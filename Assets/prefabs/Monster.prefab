@@ -699,13 +699,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rbody: {fileID: 5424020}
   m_maxSpeed: 2
-  m_acceleration: 1
+  m_acceleration: 2
   m_velocityFallof: .800000012
   m_groundCheckPoint: {fileID: 408622}
   m_groundCheckRadius: .349999994
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  m_jumpGraceTime: .300000012
+  m_inutTimeSpdMultiplier: 1
   m_playerSteerFacing: {fileID: 442516}
   m_pointOfViewRunning: {fileID: 0}
   m_pointOfViewJumping: {fileID: 0}
@@ -825,7 +827,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_acceleration
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141190}
